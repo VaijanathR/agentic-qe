@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "document_id": "EXEC-CUSTOMER-001",
+    "version": "1.0",
+    "status": "Approved Execution History Baseline",
+    "source_requirement": "SRS-CUSTOMER-001",
+    "source_requirement_version": "1.0",
+    "purpose": "Historical execution knowledge for regression analysis, RCA, impact analysis, prioritization and Agentic QE re-planning",
+    "governance": "Execution history is immutable historical evidence and must not be deleted or silently overwritten"
+  },
+  "executions": [
+    {
+      "execution_id": "EXEC-CUST-001",
+      "execution_date": "2026-08-20",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-001",
+      "testcase_title": "Create customer with valid data",
+      "test_data_id": "TD-CUST-001",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "POST /customers",
+      "request_summary": {
+        "customerName": "Alpha Technologies",
+        "country": "India",
+        "email": "contact@alphatechnologies.example"
+      },
+      "response_summary": {
+        "status_code": 201,
+        "customer_id_generated": 101
+      },
+      "response_time_seconds": 1.24,
+      "business_validation": {
+        "customer_created": true,
+        "customer_retrievable": true
+      },
+      "status": "PASS",
+      "evidence_ids": [
+        "EVID-CUST-001",
+        "EVID-CUST-002"
+      ],
+      "notes": "Create response and subsequent retrieval validated successfully"
+    },
+    {
+      "execution_id": "EXEC-CUST-002",
+      "execution_date": "2026-08-20",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-005",
+      "testcase_title": "Reject duplicate customer",
+      "test_data_id": "TD-CUST-009",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "POST /customers",
+      "request_summary": {
+        "customerName": "Duplicate Customer",
+        "country": "Germany"
+      },
+      "response_summary": {
+        "status_code": 409
+      },
+      "response_time_seconds": 0.88,
+      "business_validation": {
+        "new_customer_created": false,
+        "existing_customer_unchanged": true
+      },
+      "status": "PASS",
+      "evidence_ids": [
+        "EVID-CUST-003",
+        "EVID-CUST-004"
+      ],
+      "notes": "Duplicate prevention and data integrity validated"
+    },
+    {
+      "execution_id": "EXEC-CUST-003",
+      "execution_date": "2026-08-21",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-003",
+      "testcase_title": "Reject unsupported country",
+      "test_data_id": "TD-CUST-004",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "POST /customers",
+      "request_summary": {
+        "customerName": "Invalid Country Customer",
+        "country": "Zingababuva"
+      },
+      "response_summary": {
+        "status_code": 400
+      },
+      "response_time_seconds": 0.42,
+      "business_validation": {
+        "customer_created": false
+      },
+      "status": "PASS",
+      "evidence_ids": [
+        "EVID-CUST-005"
+      ],
+      "notes": "Unsupported country rejected and no customer created"
+    },
+    {
+      "execution_id": "EXEC-CUST-004",
+      "execution_date": "2026-08-21",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-008",
+      "testcase_title": "Validate successful create response and persistence",
+      "test_data_id": "TD-CUST-008",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "POST /customers followed by GET /customers/{customerId}",
+      "request_summary": {
+        "customerName": "ABC Corp",
+        "country": "India"
+      },
+      "response_summary": {
+        "create_status_code": 201,
+        "retrieve_status_code": 404
+      },
+      "response_time_seconds": 1.31,
+      "business_validation": {
+        "customer_created_response": true,
+        "customer_retrievable": false
+      },
+      "status": "FAIL",
+      "failure_id": "DEF-CUST-001",
+      "evidence_ids": [
+        "EVID-CUST-006",
+        "EVID-CUST-007",
+        "EVID-CUST-008"
+      ],
+      "notes": "HTTP 201 was returned but subsequent retrieval failed; persistence issue identified"
+    },
+    {
+      "execution_id": "EXEC-CUST-005",
+      "execution_date": "2026-08-22",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-012",
+      "testcase_title": "Developer authorization for update",
+      "test_data_id": "TD-AUTH-002",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "PUT /customers/{customerId}",
+      "request_summary": {
+        "role": "Developer",
+        "customerId": 101
+      },
+      "response_summary": {
+        "status_code": 403
+      },
+      "response_time_seconds": 0.37,
+      "business_validation": {
+        "customer_modified": false
+      },
+      "status": "PASS",
+      "evidence_ids": [
+        "EVID-CUST-009"
+      ],
+      "notes": "Developer was correctly prevented from performing Update"
+    },
+    {
+      "execution_id": "EXEC-CUST-006",
+      "execution_date": "2026-08-22",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-015",
+      "testcase_title": "API response time validation",
+      "test_data_id": "TD-PERF-001",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "POST /customers",
+      "request_summary": {
+        "customerName": "Performance Customer",
+        "country": "USA"
+      },
+      "response_summary": {
+        "status_code": 201
+      },
+      "response_time_seconds": 7.21,
+      "business_validation": {
+        "functional_result": true
+      },
+      "performance_validation": {
+        "threshold_seconds": 8,
+        "within_threshold": true
+      },
+      "status": "PASS",
+      "evidence_ids": [
+        "EVID-CUST-010"
+      ],
+      "notes": "Response time was below the approved eight-second threshold"
+    },
+    {
+      "execution_id": "EXEC-CUST-007",
+      "execution_date": "2026-08-23",
+      "environment": "LOCAL",
+      "requirement_version": "1.0",
+      "testcase_id": "TC-CUST-013",
+      "testcase_title": "Controlled environment blockage",
+      "test_data_id": "TD-ENV-001",
+      "automation_version": "AUTOMATION-v1.0",
+      "operation": "API execution",
+      "request_summary": {
+        "environment_dependency": "Customer API"
+      },
+      "response_summary": null,
+      "response_time_seconds": null,
+      "business_validation": null,
+      "status": "BLOCKED",
+      "failure_id": null,
+      "evidence_ids": [
+        "EVID-CUST-011"
+      ],
+      "notes": "Customer API environment unavailable. Independent requirement, test data and RAG activities remained executable"
+    }
+  ],
+  "historical_patterns": [
+    {
+      "pattern_id": "EXEC-PATTERN-001",
+      "pattern": "HTTP success without successful business persistence",
+      "historical_defect": "DEF-CUST-001",
+      "agent_guidance": "Verify downstream business outcome instead of relying only on HTTP status"
+    },
+    {
+      "pattern_id": "EXEC-PATTERN-002",
+      "pattern": "Invalid input rejected without data modification",
+      "historical_defect": "DEF-CUST-002",
+      "agent_guidance": "Negative tests should validate both rejection and data integrity"
+    },
+    {
+      "pattern_id": "EXEC-PATTERN-003",
+      "pattern": "Security authorization boundary",
+      "historical_defect": "DEF-CUST-004",
+      "agent_guidance": "Validate operation-level authorization independently from authentication"
+    },
+    {
+      "pattern_id": "EXEC-PATTERN-004",
+      "pattern": "Environment blockage with independent work available",
+      "historical_defect": null,
+      "agent_guidance": "Block only dependent execution and continue independent activities"
+    }
+  ],
+  "agent_usage_rules": [
+    {
+      "rule_id": "EXEC-RULE-001",
+      "rule": "Execution history is evidence of previous execution and must not be treated as proof of current behavior"
+    },
+    {
+      "rule_id": "EXEC-RULE-002",
+      "rule": "Current execution evidence takes precedence over historical execution observations"
+    },
+    {
+      "rule_id": "EXEC-RULE-003",
+      "rule": "Historical failures should influence regression prioritization when the same requirement, code path or dependency is affected"
+    },
+    {
+      "rule_id": "EXEC-RULE-004",
+      "rule": "A requirement version change must cause the agent to assess whether previous execution results remain valid"
+    },
+    {
+      "rule_id": "EXEC-RULE-005",
+      "rule": "Blocked execution must remain BLOCKED and must never be represented as PASS"
+    },
+    {
+      "rule_id": "EXEC-RULE-006",
+      "rule": "Execution history must be preserved for auditability and future Agentic QE learning"
+    }
+  ]
+}

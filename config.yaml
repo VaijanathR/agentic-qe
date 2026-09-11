@@ -1,0 +1,21 @@
+# Minimal configuration outline for Agentic QE.
+# No secrets or credentials belong in this file.
+#
+# project:
+#   name: agentic-qe
+#
+# paths:
+#   requirements: requirements/
+#   technical_docs: technical_docs/
+#   testcases: testcases/
+#   testdata: testdata/
+#   evidence: evidence/
+#   reports: reports/
+#   execution_history: execution_history/
+#   approvals: approvals/
+#
+# api:
+#   base_url: ""        # target Customer Management API base URL
+#
+# governance:
+#   autonomy_levels: [GREEN, YELLOW, RED]

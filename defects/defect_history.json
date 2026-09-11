@@ -1,0 +1,244 @@
+{
+  "metadata": {
+    "document_id": "DEF-CUSTOMER-001",
+    "version": "1.0",
+    "status": "Approved Defect History Baseline",
+    "source_requirement": "SRS-CUSTOMER-001",
+    "source_requirement_version": "1.0",
+    "purpose": "Historical defect knowledge for Agentic QE retrieval, failure analysis, regression assessment and impact analysis",
+    "governance": "Historical information must not override the current approved requirement baseline"
+  },
+  "defects": [
+    {
+      "defect_id": "DEF-CUST-001",
+      "title": "Customer created successfully but cannot be retrieved",
+      "severity": "High",
+      "priority": "P1",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-003",
+      "requirement_statement": "A successfully created customer must be retrievable using the generated customer ID",
+      "affected_operation": "POST /customers followed by GET /customers/{customerId}",
+      "observed_behavior": "POST returned successful creation response but subsequent GET returned 404",
+      "expected_behavior": "Created customer must be persisted and retrievable",
+      "root_cause": "Customer persistence operation was not committed before the create transaction completed",
+      "resolution": "Corrected persistence transaction handling",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-001",
+        "TC-CUST-008"
+      ],
+      "evidence_types": [
+        "API response",
+        "GET response",
+        "application logs",
+        "database verification"
+      ],
+      "historical_learning": "HTTP 201 alone is insufficient evidence of successful customer creation",
+      "agent_guidance": "When create returns success, verify business outcome through subsequent retrieval"
+    },
+    {
+      "defect_id": "DEF-CUST-002",
+      "title": "Unsupported country accepted during customer creation",
+      "severity": "High",
+      "priority": "P1",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-002",
+      "requirement_statement": "Country must be one of the supported countries",
+      "affected_operation": "POST /customers",
+      "observed_behavior": "Customer was created with unsupported country value",
+      "expected_behavior": "Request must be rejected and no customer must be created",
+      "root_cause": "Country validation was missing from the create request validation path",
+      "resolution": "Added supported-country validation",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-003",
+        "TC-CUST-004"
+      ],
+      "evidence_types": [
+        "API request",
+        "API response",
+        "customer retrieval"
+      ],
+      "historical_learning": "Negative validation tests must verify both rejection and absence of unintended data modification",
+      "agent_guidance": "For invalid input, validate the response and verify that persistent customer data remains unchanged"
+    },
+    {
+      "defect_id": "DEF-CUST-003",
+      "title": "Duplicate customer was created",
+      "severity": "Critical",
+      "priority": "P1",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-004",
+      "requirement_statement": "Duplicate customerName and country combinations must not create another customer",
+      "affected_operation": "POST /customers",
+      "observed_behavior": "A second customer record was created with the same customerName and country",
+      "expected_behavior": "Duplicate request must be rejected and existing customer must remain unchanged",
+      "root_cause": "Duplicate validation was performed only against a non-unique customer name field",
+      "resolution": "Implemented duplicate validation using customerName and country combination",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-005",
+        "TC-CUST-006"
+      ],
+      "evidence_types": [
+        "API request",
+        "API response",
+        "customer records"
+      ],
+      "historical_learning": "Duplicate validation must use the complete approved business uniqueness rule",
+      "agent_guidance": "When duplicate behavior is tested, verify both rejection and preservation of the original record"
+    },
+    {
+      "defect_id": "DEF-CUST-004",
+      "title": "Developer role was incorrectly allowed to update customers",
+      "severity": "High",
+      "priority": "P1",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-006",
+      "requirement_statement": "Developer role is authorized for Create and Retrieve but not Update",
+      "affected_operation": "PUT /customers/{customerId}",
+      "observed_behavior": "Authenticated Developer successfully updated an existing customer",
+      "expected_behavior": "Developer update request must be rejected as unauthorized",
+      "root_cause": "Authorization matrix did not correctly enforce operation-level permissions",
+      "resolution": "Corrected role-to-operation authorization mapping",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-012",
+        "TC-CUST-013"
+      ],
+      "evidence_types": [
+        "authenticated request",
+        "authorization decision",
+        "API response",
+        "customer record"
+      ],
+      "historical_learning": "Authentication and authorization must be validated separately",
+      "agent_guidance": "Do not treat successful authentication as permission to perform every operation"
+    },
+    {
+      "defect_id": "DEF-CUST-005",
+      "title": "Country validation was case-sensitive",
+      "severity": "Medium",
+      "priority": "P2",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-002",
+      "requirement_statement": "Supported country validation is case-insensitive",
+      "affected_operation": "POST /customers and PUT /customers/{customerId}",
+      "observed_behavior": "Values such as india and INDIA were incorrectly rejected",
+      "expected_behavior": "Supported country values must be accepted regardless of letter case",
+      "root_cause": "Country comparison used case-sensitive string matching",
+      "resolution": "Normalized country values before validation",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-004"
+      ],
+      "evidence_types": [
+        "API request",
+        "API response"
+      ],
+      "historical_learning": "Validation normalization rules must be included in regression coverage",
+      "agent_guidance": "When a validation rule is case-insensitive, generate representative lower-case, upper-case and mixed-case variants"
+    },
+    {
+      "defect_id": "DEF-CUST-006",
+      "title": "Invalid optional email accepted",
+      "severity": "Medium",
+      "priority": "P2",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-007",
+      "requirement_statement": "Optional email must be valid when supplied",
+      "affected_operation": "POST /customers and PUT /customers/{customerId}",
+      "observed_behavior": "Malformed email values were accepted",
+      "expected_behavior": "Malformed email values must be rejected",
+      "root_cause": "Optional fields were excluded from validation when mandatory-field validation passed",
+      "resolution": "Added validation for optional fields when supplied",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-007"
+      ],
+      "evidence_types": [
+        "API request",
+        "API response"
+      ],
+      "historical_learning": "Optional does not mean unvalidated; optional fields require validation whenever provided",
+      "agent_guidance": "Generate both omitted and supplied-valid/supplied-invalid variants for optional fields"
+    },
+    {
+      "defect_id": "DEF-CUST-007",
+      "title": "Successful response returned without required customer information",
+      "severity": "Medium",
+      "priority": "P2",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-003",
+      "requirement_statement": "Successful create response must contain generated customer ID and relevant customer information",
+      "affected_operation": "POST /customers",
+      "observed_behavior": "HTTP success response was returned but customer ID was missing from response body",
+      "expected_behavior": "Response must contain the generated customer ID and required customer information",
+      "root_cause": "Response schema validation was not implemented",
+      "resolution": "Added response-body schema and business-field validation",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-001",
+        "TC-CUST-008"
+      ],
+      "evidence_types": [
+        "HTTP status",
+        "response body",
+        "customer retrieval"
+      ],
+      "historical_learning": "HTTP status alone does not establish API correctness",
+      "agent_guidance": "Validate status code, response schema, business fields and downstream business outcome"
+    },
+    {
+      "defect_id": "DEF-CUST-008",
+      "title": "API response exceeded eight-second performance threshold",
+      "severity": "High",
+      "priority": "P1",
+      "status": "Resolved",
+      "requirement_id": "REQ-CUST-009",
+      "requirement_statement": "API response time must be less than eight seconds under normal test conditions",
+      "affected_operation": "POST /customers",
+      "observed_behavior": "Average response time exceeded the approved eight-second threshold",
+      "expected_behavior": "Response time must remain below eight seconds under normal test conditions",
+      "root_cause": "Slow downstream persistence dependency caused excessive request latency",
+      "resolution": "Optimized persistence interaction and connection handling",
+      "regression_required": true,
+      "related_testcases": [
+        "TC-CUST-015"
+      ],
+      "evidence_types": [
+        "response timing",
+        "application logs",
+        "dependency timing"
+      ],
+      "historical_learning": "Performance failures require timing evidence and dependency analysis rather than functional response inspection alone",
+      "agent_guidance": "Capture response time and relevant dependency evidence before classifying performance failure"
+    }
+  ],
+  "agent_usage_rules": [
+    {
+      "rule_id": "DEF-RULE-001",
+      "rule": "Historical defects may support RCA and regression prioritization but must not override the current approved requirement baseline"
+    },
+    {
+      "rule_id": "DEF-RULE-002",
+      "rule": "A historical defect is evidence of what happened previously, not proof that the same defect currently exists"
+    },
+    {
+      "rule_id": "DEF-RULE-003",
+      "rule": "Historical defects should be correlated with current execution evidence before recommending RCA conclusions"
+    },
+    {
+      "rule_id": "DEF-RULE-004",
+      "rule": "If current evidence contradicts historical behavior, preserve both observations and investigate the difference"
+    },
+    {
+      "rule_id": "DEF-RULE-005",
+      "rule": "Historical defects may increase regression priority when their affected requirements or code paths are changed"
+    },
+    {
+      "rule_id": "DEF-RULE-006",
+      "rule": "Historical artifacts must never be deleted merely because the associated defect is resolved"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+```csv id="rtm01"
+Requirement_ID,Requirement_Title,Requirement_Category,Priority,Source_Document,Source_Version,Testcase_ID,Test_Type,Automation_Candidate,Data_Required,Security_Relevance,Performance_Relevance,Status
+REQ-CUST-001,Customer ID must be system generated and unique,Customer Data,Must,SRS-CUSTOMER-001,1.0,TC-CUST-001,Functional,Yes,TD-CUST-001,No,No,Active
+REQ-CUST-002,Customer Name is mandatory and must not be empty,Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-002,Functional,Yes,TD-CUST-002,No,No,Active
+REQ-CUST-003,Country is mandatory,Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-003,Functional,Yes,TD-CUST-003,No,No,Active
+REQ-CUST-004,Only supported countries are accepted,Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-004,Functional,Yes,TD-CUST-004,No,No,Active
+REQ-CUST-005,Country validation is case insensitive,Validation,Should,SRS-CUSTOMER-001,1.0,TC-CUST-005,Functional,Yes,TD-CUST-005,No,No,Active
+REQ-CUST-006,Email is optional but must be valid when supplied,Validation,Should,SRS-CUSTOMER-001,1.0,TC-CUST-006,Functional,Yes,TD-CUST-006,No,No,Active
+REQ-CUST-007,Phone is optional but must be valid when supplied,Validation,Should,SRS-CUSTOMER-001,1.0,TC-CUST-007,Functional,Yes,TD-CUST-007,No,No,Active
+REQ-CUST-008,Authorized users can create a valid customer,Create,Must,SRS-CUSTOMER-001,1.0,TC-CUST-008,Functional,Yes,TD-CUST-008,Yes,Yes,Active
+REQ-CUST-009,Successful customer creation returns the created customer information,Create,Must,SRS-CUSTOMER-001,1.0,TC-CUST-009,Functional,Yes,TD-CUST-008,No,No,Active
+REQ-CUST-010,Successful customer creation must persist exactly one customer record,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-010,Functional,Yes,TD-CUST-008,No,No,Active
+REQ-CUST-011,Created customer must be retrievable using returned customer ID,Create,Must,SRS-CUSTOMER-001,1.0,TC-CUST-011,Functional,Yes,TD-CUST-008,No,No,Active
+REQ-CUST-012,Duplicate customer must not be created,Duplicate Prevention,Must,SRS-CUSTOMER-001,1.0,TC-CUST-012,Functional,Yes,TD-CUST-009,No,No,Active
+REQ-CUST-013,Duplicate detection is based on customer name and country,Duplicate Prevention,Must,SRS-CUSTOMER-001,1.0,TC-CUST-013,Functional,Yes,TD-CUST-009,No,No,Active
+REQ-CUST-014,Existing customer must remain unchanged when duplicate creation is attempted,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-014,Functional,Yes,TD-CUST-009,No,No,Active
+REQ-CUST-015,Authorized users can retrieve an existing customer,Retrieve,Must,SRS-CUSTOMER-001,1.0,TC-CUST-015,Functional,Yes,TD-CUST-010,Yes,Yes,Active
+REQ-CUST-016,Retrieving a customer must not modify customer data,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-016,Functional,Yes,TD-CUST-010,No,No,Active
+REQ-CUST-017,Retrieving a nonexistent customer returns not found,Retrieve,Must,SRS-CUSTOMER-001,1.0,TC-CUST-017,Negative,Yes,TD-CUST-011,No,No,Active
+REQ-CUST-018,Authorized users can update an existing customer,Update,Must,SRS-CUSTOMER-001,1.0,TC-CUST-018,Functional,Yes,TD-CUST-012,Yes,Yes,Active
+REQ-CUST-019,Customer ID cannot be changed during update,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-019,Negative,Yes,TD-CUST-013,No,No,Active
+REQ-CUST-020,Country validation applies during update,Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-020,Negative,Yes,TD-CUST-014,No,No,Active
+REQ-CUST-021,Update must not create a duplicate customer,Duplicate Prevention,Must,SRS-CUSTOMER-001,1.0,TC-CUST-021,Negative,Yes,TD-CUST-009,No,No,Active
+REQ-CUST-022,Updating nonexistent customer must not create a customer,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-022,Negative,Yes,TD-CUST-011,No,No,Active
+REQ-CUST-023,Manager can create retrieve and update customers,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-023,Security,Yes,TD-AUTH-001,Yes,No,Active
+REQ-CUST-024,Developer can create and retrieve but cannot update customers,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-024,Security,Yes,TD-AUTH-002,Yes,No,Active
+REQ-CUST-025,Business Head can create retrieve and update customers,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-025,Security,Yes,TD-AUTH-003,Yes,No,Active
+REQ-CUST-026,Business Lead can create retrieve and update customers,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-026,Security,Yes,TD-AUTH-004,Yes,No,Active
+REQ-CUST-027,QA can create and retrieve but cannot update customers,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-027,Security,Yes,TD-AUTH-005,Yes,No,Active
+REQ-CUST-028,Unauthenticated users cannot access protected operations,Authentication,Must,SRS-CUSTOMER-001,1.0,TC-CUST-028,Security,Yes,TD-AUTH-006,Yes,No,Active
+REQ-CUST-029,Authenticated but unauthorized users must receive an authorization response,Authorization,Must,SRS-CUSTOMER-001,1.0,TC-CUST-029,Security,Yes,TD-AUTH-007,Yes,No,Active
+REQ-CUST-030,Unauthorized attempts must be logged,Security,Must,SRS-CUSTOMER-001,1.0,TC-CUST-030,Security,Yes,TD-AUTH-007,Yes,No,Active
+REQ-CUST-031,Invalid input must not modify existing data,Data Integrity,Must,SRS-CUSTOMER-001,1.0,TC-CUST-031,Negative,Yes,TD-CUST-015,No,No,Active
+REQ-CUST-032,API must handle missing mandatory fields correctly,Error Handling,Must,SRS-CUSTOMER-001,1.0,TC-CUST-032,Negative,Yes,TD-CUST-002,No,No,Active
+REQ-CUST-033,API must handle unsupported country correctly,Error Handling,Must,SRS-CUSTOMER-001,1.0,TC-CUST-004,Negative,Yes,TD-CUST-004,No,No,Active
+REQ-CUST-034,API must handle invalid optional fields correctly,Error Handling,Should,SRS-CUSTOMER-001,1.0,TC-CUST-034,Negative,Yes,TD-CUST-016,No,No,Active
+REQ-CUST-035,API must handle duplicate customer correctly,Error Handling,Must,SRS-CUSTOMER-001,1.0,TC-CUST-012,Negative,Yes,TD-CUST-009,No,No,Active
+REQ-CUST-036,API must handle nonexistent customer correctly,Error Handling,Must,SRS-CUSTOMER-001,1.0,TC-CUST-017,Negative,Yes,TD-CUST-011,No,No,Active
+REQ-CUST-037,Successful API response must be validated beyond HTTP status,Response Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-037,Functional,Yes,TD-CUST-008,No,No,Active
+REQ-CUST-038,Customer creation must be verified through subsequent retrieval,Response Validation,Must,SRS-CUSTOMER-001,1.0,TC-CUST-011,Functional,Yes,TD-CUST-008,No,No,Active
+REQ-CUST-039,API response time must be less than 8 seconds,Performance,Must,SRS-CUSTOMER-001,1.0,TC-CUST-039,Performance,Yes,TD-PERF-001,No,Yes,Active
+REQ-CUST-040,Security and penetration testing must be performed,Security,Must,SRS-CUSTOMER-001,1.0,TC-CUST-040,Security,Yes,TD-SEC-001,Yes,No,Active
+REQ-CUST-041,Security findings must be preserved and escalated,Security,Must,SRS-CUSTOMER-001,1.0,TC-CUST-041,Security,Yes,TD-SEC-002,Yes,No,Active
+REQ-CUST-042,Test evidence must be preserved for every execution,Evidence,Must,SRS-CUSTOMER-001,1.0,TC-CUST-042,Auditability,Yes,TD-CUST-017,Yes,No,Active
+REQ-CUST-043,Requirements must be traceable through testcase test data automation execution evidence and result,Traceability,Must,SRS-CUSTOMER-001,1.0,TC-CUST-043,Auditability,Yes,TD-CUST-017,No,No,Active
+REQ-CUST-044,Requirement changes must trigger impact analysis and re-planning,Change Management,Must,SRS-CUSTOMER-001,1.0,TC-CUST-044,Agentic Behavior,Yes,TD-CHANGE-001,No,No,Active
+REQ-CUST-045,Previous requirement and execution history must be preserved,Governance,Must,SRS-CUSTOMER-001,1.0,TC-CUST-045,Governance,Yes,TD-CHANGE-002,No,No,Active
+REQ-CUST-046,Conflicting approved sources must trigger human governance,Governance,Must,SRS-CUSTOMER-001,1.0,TC-CUST-046,Agentic Behavior,Yes,TD-CONFLICT-001,Yes,No,Active
+REQ-CUST-047,Approved testcase baseline cannot be changed without authorization,Governance,Must,SRS-CUSTOMER-001,1.0,TC-CUST-047,Agentic Behavior,Yes,TD-GOV-001,No,No,Active
+REQ-CUST-048,Artifacts must never be deleted,Governance,Must,SRS-CUSTOMER-001,1.0,TC-CUST-048,Governance,Yes,TD-GOV-002,No,No,Active
+REQ-CUST-049,Blocked testing work must be isolated while independent work continues,Agentic Execution,Should,SRS-CUSTOMER-001,1.0,TC-CUST-049,Agentic Behavior,Yes,TD-ENV-001,No,No,Active
+REQ-CUST-050,Test failures must be validated against approved expected results before classification,Failure Analysis,Must,SRS-CUSTOMER-001,1.0,TC-CUST-050,Agentic Behavior,Yes,TD-FAIL-001,Yes,No,Active
+```

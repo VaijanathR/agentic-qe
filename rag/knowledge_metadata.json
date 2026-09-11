@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "document_id": "RAG-META-CUSTOMER-001",
+    "version": "1.0",
+    "status": "Approved Knowledge Metadata Baseline",
+    "purpose": "Metadata registry for Agentic QE knowledge retrieval and progressive RAG",
+    "governance": "Metadata controls retrieval relevance and authority but does not replace document content or governance rules"
+  },
+  "retrieval_principles": [
+    {
+      "principle_id": "RAG-PRINCIPLE-001",
+      "principle": "Retrieve the latest approved authoritative baseline first"
+    },
+    {
+      "principle_id": "RAG-PRINCIPLE-002",
+      "principle": "Retrieve dependent technical and testing artifacts when the baseline is insufficient"
+    },
+    {
+      "principle_id": "RAG-PRINCIPLE-003",
+      "principle": "Retrieve historical defects and execution history when RCA, regression or impact analysis requires historical evidence"
+    },
+    {
+      "principle_id": "RAG-PRINCIPLE-004",
+      "principle": "Conflicting approved sources must be preserved and escalated for human governance rather than silently resolved"
+    },
+    {
+      "principle_id": "RAG-PRINCIPLE-005",
+      "principle": "Retrieval must record why a document was retrieved and how it influenced the task"
+    },
+    {
+      "principle_id": "RAG-PRINCIPLE-006",
+      "principle": "Historical evidence must not override the current approved requirement baseline"
+    }
+  ],
+  "knowledge_documents": [
+    {
+      "knowledge_id": "KNOW-CUST-001",
+      "document_name": "SRS v1.md",
+      "path": "requirements/SRS v1.md",
+      "document_type": "Software Requirements Specification",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "AUTHORITATIVE_REQUIREMENT_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved Project Requirement",
+      "purpose": "Defines business and functional requirements for Customer Management API",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-002",
+        "KNOW-CUST-003",
+        "KNOW-CUST-004",
+        "KNOW-CUST-005",
+        "KNOW-CUST-006",
+        "KNOW-CUST-007",
+        "KNOW-CUST-008"
+      ],
+      "retrieval_priority": 1
+    },
+    {
+      "knowledge_id": "KNOW-CUST-002",
+      "document_name": "Customer_API_Technical_Spec.md",
+      "path": "technical_docs/Customer_API_Technical_Spec.md",
+      "document_type": "Technical Specification",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "TECHNICAL_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved Technical Design",
+      "purpose": "Defines API operations, data behavior, validation, authorization, error handling and technical implementation expectations",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-001",
+        "KNOW-CUST-003"
+      ],
+      "retrieval_priority": 2
+    },
+    {
+      "knowledge_id": "KNOW-CUST-003",
+      "document_name": "customer_api.yaml",
+      "path": "technical_docs/customer_api.yaml",
+      "document_type": "OpenAPI Specification",
+      "version": "1.0.0",
+      "approval_status": "Approved",
+      "authority_level": "API_CONTRACT_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved API Contract",
+      "purpose": "Defines API endpoints, request schemas, response schemas and API contract behavior",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-001",
+        "KNOW-CUST-002",
+        "KNOW-CUST-004"
+      ],
+      "retrieval_priority": 2,
+      "conflict_test_candidate": true
+    },
+    {
+      "knowledge_id": "KNOW-CUST-004",
+      "document_name": "RTM.csv",
+      "path": "requirements/RTM.csv",
+      "document_type": "Requirements Traceability Matrix",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "TRACEABILITY_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved QE Artifact",
+      "purpose": "Maps requirements to testcases, test data and automation scope",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-001",
+        "KNOW-CUST-005",
+        "KNOW-CUST-006"
+      ],
+      "retrieval_priority": 2
+    },
+    {
+      "knowledge_id": "KNOW-CUST-005",
+      "document_name": "testcases.json",
+      "path": "testcases/testcases.json",
+      "document_type": "Test Case Baseline",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "TEST_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved QE Test Design",
+      "purpose": "Defines approved functional, negative, security, performance and governance test scenarios",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-001",
+        "KNOW-CUST-004",
+        "KNOW-CUST-006"
+      ],
+      "retrieval_priority": 3
+    },
+    {
+      "knowledge_id": "KNOW-CUST-006",
+      "document_name": "testdata.json",
+      "path": "testdata/testdata.json",
+      "document_type": "Test Data Baseline",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "TEST_DATA_BASELINE",
+      "effective_date": "2026-08-01",
+      "source": "Approved QE Test Data",
+      "purpose": "Provides reusable positive, negative, authorization, performance, security, conflict and change-management data",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-005",
+        "KNOW-CUST-007"
+      ],
+      "retrieval_priority": 3
+    },
+    {
+      "knowledge_id": "KNOW-CUST-007",
+      "document_name": "defect_history.json",
+      "path": "defects/defect_history.json",
+      "document_type": "Historical Defect Knowledge",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "HISTORICAL_EVIDENCE",
+      "effective_date": "2026-08-01",
+      "source": "Historical QE Execution",
+      "purpose": "Provides historical defect patterns, RCA information and regression learning",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-001",
+        "KNOW-CUST-005",
+        "KNOW-CUST-008"
+      ],
+      "retrieval_priority": 4
+    },
+    {
+      "knowledge_id": "KNOW-CUST-008",
+      "document_name": "execution_history.json",
+      "path": "execution_history/execution_history.json",
+      "document_type": "Execution History",
+      "version": "1.0",
+      "approval_status": "Approved",
+      "authority_level": "HISTORICAL_EXECUTION_EVIDENCE",
+      "effective_date": "2026-08-01",
+      "source": "Historical Test Execution",
+      "purpose": "Provides previous execution outcomes, evidence references, historical patterns and regression information",
+      "supersedes": null,
+      "relationships": [
+        "KNOW-CUST-005",
+        "KNOW-CUST-006",
+        "KNOW-CUST-007"
+      ],
+      "retrieval_priority": 4
+    }
+  ],
+  "retrieval_strategy": {
+    "step_1": "Retrieve latest approved requirement baseline",
+    "step_2": "Retrieve relevant technical/API contract documents",
+    "step_3": "Retrieve RTM and approved testcase baseline",
+    "step_4": "Retrieve relevant test data",
+    "step_5": "Retrieve historical defects when failure analysis or regression assessment requires it",
+    "step_6": "Retrieve execution history when previous behavior or regression evidence is relevant",
+    "step_7": "Detect conflicts across retrieved approved sources",
+    "step_8": "Preserve conflicting evidence and trigger human governance where required",
+    "step_9": "Record retrieval reason, source, version and relevance",
+    "step_10": "Return fit-for-purpose knowledge to the requesting agent"
+  },
+  "authority_hierarchy": [
+    {
+      "level": 1,
+      "authority": "Current approved requirement baseline",
+      "examples": [
+        "SRS_v1.md"
+      ]
+    },
+    {
+      "level": 2,
+      "authority": "Current approved technical and API contract baseline",
+      "examples": [
+        "Customer_API_Technical_Spec.md",
+        "customer_api.yaml"
+      ]
+    },
+    {
+      "level": 3,
+      "authority": "Current approved QE testing baseline",
+      "examples": [
+        "RTM.csv",
+        "testcases.json",
+        "testdata.json"
+      ]
+    },
+    {
+      "level": 4,
+      "authority": "Historical evidence",
+      "examples": [
+        "defect_history.json",
+        "execution_history.json"
+      ]
+    },
+    {
+      "level": 5,
+      "authority": "Agent inference",
+      "examples": [
+        "LLM-generated interpretation",
+        "LLM-generated recommendation"
+      ]
+    }
+  ],
+  "governance": [
+    {
+      "rule_id": "RAG-GOV-001",
+      "rule": "RAG retrieval provides evidence and context; it does not independently approve requirement changes"
+    },
+    {
+      "rule_id": "RAG-GOV-002",
+      "rule": "The LLM may reason over retrieved evidence but must not silently override an approved baseline"
+    },
+    {
+      "rule_id": "RAG-GOV-003",
+      "rule": "Rules Engine determines whether retrieved information crosses a governance boundary"
+    },
+    {
+      "rule_id": "RAG-GOV-004",
+      "rule": "Human approval is required when conflicting approved sources cannot be resolved by an existing approved governance rule"
+    },
+    {
+      "rule_id": "RAG-GOV-005",
+      "rule": "Historical documents remain retrievable even after defects are resolved or requirements change"
+    },
+    {
+      "rule_id": "RAG-GOV-006",
+      "rule": "No knowledge artifact may be deleted as part of normal Agentic QE operation"
+    }
+  ],
+  "retrieval_logging": {
+    "required_fields": [
+      "retrieval_id",
+      "task_id",
+      "requesting_agent",
+      "query_or_objective",
+      "knowledge_id",
+      "document_name",
+      "version",
+      "approval_status",
+      "retrieval_reason",
+      "relevance",
+      "timestamp",
+      "downstream_use"
+    ]
+  }
+}

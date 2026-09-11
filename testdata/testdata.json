@@ -1,0 +1,589 @@
+{
+  "metadata": {
+    "document_id": "TD-CUSTOMER-001",
+    "version": "1.0",
+    "status": "Approved Test Data Baseline",
+    "source_requirement": "SRS-CUSTOMER-001",
+    "source_requirement_version": "1.0",
+    "source_testcases": "testcases.json",
+    "purpose": "Reusable test data for functional, negative, security, performance, governance and Agentic QE testing"
+  },
+
+  "supported_countries": [
+    "India",
+    "Germany",
+    "UK",
+    "USA"
+  ],
+
+  "customer_data": [
+
+    {
+      "data_id": "TD-CUST-001",
+      "description": "Valid customer data for customer ID generation",
+      "customerName": "Alpha Technologies",
+      "country": "India",
+      "email": "contact@alphatechnologies.example",
+      "phone": "+91-9876500001",
+      "expected_valid": true
+    },
+
+    {
+      "data_id": "TD-CUST-002",
+      "description": "Missing and empty customer name variations",
+      "variations": [
+        {
+          "variation_id": "TD-CUST-002-A",
+          "customerName": null,
+          "country": "India",
+          "expected_valid": false,
+          "expected_reason": "Customer name is missing"
+        },
+        {
+          "variation_id": "TD-CUST-002-B",
+          "customerName": "",
+          "country": "India",
+          "expected_valid": false,
+          "expected_reason": "Customer name is empty"
+        },
+        {
+          "variation_id": "TD-CUST-002-C",
+          "customerName": "   ",
+          "country": "India",
+          "expected_valid": false,
+          "expected_reason": "Customer name contains only whitespace"
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-003",
+      "description": "Missing country variations",
+      "variations": [
+        {
+          "variation_id": "TD-CUST-003-A",
+          "customerName": "Beta Solutions",
+          "country": null,
+          "expected_valid": false,
+          "expected_reason": "Country is missing"
+        },
+        {
+          "variation_id": "TD-CUST-003-B",
+          "customerName": "Gamma Solutions",
+          "expected_valid": false,
+          "expected_reason": "Country field is omitted"
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-004",
+      "description": "Supported and unsupported country values",
+      "valid_values": [
+        "India",
+        "Germany",
+        "UK",
+        "USA"
+      ],
+      "invalid_values": [
+        "Zingababuva",
+        "France",
+        "Japan",
+        "Australia",
+        "UnknownCountry",
+        "",
+        "12345"
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-005",
+      "description": "Case variations for supported countries",
+      "variations": [
+        {
+          "country": "india",
+          "expected_valid": true
+        },
+        {
+          "country": "INDIA",
+          "expected_valid": true
+        },
+        {
+          "country": "InDiA",
+          "expected_valid": true
+        },
+        {
+          "country": "germany",
+          "expected_valid": true
+        },
+        {
+          "country": "GERMANY",
+          "expected_valid": true
+        },
+        {
+          "country": "GeRmAnY",
+          "expected_valid": true
+        },
+        {
+          "country": "uk",
+          "expected_valid": true
+        },
+        {
+          "country": "UK",
+          "expected_valid": true
+        },
+        {
+          "country": "usa",
+          "expected_valid": true
+        },
+        {
+          "country": "USA",
+          "expected_valid": true
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-006",
+      "description": "Optional email variations",
+      "variations": [
+        {
+          "variation_id": "TD-CUST-006-A",
+          "customerName": "Email Optional Customer",
+          "country": "India",
+          "email": null,
+          "expected_valid": true
+        },
+        {
+          "variation_id": "TD-CUST-006-B",
+          "customerName": "Valid Email Customer",
+          "country": "Germany",
+          "email": "valid.customer@example.com",
+          "expected_valid": true
+        },
+        {
+          "variation_id": "TD-CUST-006-C",
+          "customerName": "Invalid Email Customer",
+          "country": "UK",
+          "email": "invalid-email",
+          "expected_valid": false
+        },
+        {
+          "variation_id": "TD-CUST-006-D",
+          "customerName": "Invalid Email Customer 2",
+          "country": "USA",
+          "email": "customer@",
+          "expected_valid": false
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-007",
+      "description": "Optional phone variations",
+      "variations": [
+        {
+          "variation_id": "TD-CUST-007-A",
+          "customerName": "Phone Optional Customer",
+          "country": "India",
+          "phone": null,
+          "expected_valid": true
+        },
+        {
+          "variation_id": "TD-CUST-007-B",
+          "customerName": "Valid Phone Customer",
+          "country": "India",
+          "phone": "+91-9876500002",
+          "expected_valid": true
+        },
+        {
+          "variation_id": "TD-CUST-007-C",
+          "customerName": "Invalid Phone Customer",
+          "country": "India",
+          "phone": "INVALID",
+          "expected_valid": false
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-008",
+      "description": "Primary valid customer creation data",
+      "customerName": "ABC Corp",
+      "country": "India",
+      "email": "contact@abccorp.example",
+      "phone": "+91-9876500003",
+      "expected_valid": true,
+      "expected_operation": "Create"
+    },
+
+    {
+      "data_id": "TD-CUST-009",
+      "description": "Duplicate customer data",
+      "original_customer": {
+        "customerName": "Duplicate Customer",
+        "country": "Germany",
+        "email": "duplicate@example.com",
+        "phone": "+49-555000001"
+      },
+      "duplicate_request": {
+        "customerName": "Duplicate Customer",
+        "country": "Germany",
+        "email": "duplicate2@example.com",
+        "phone": "+49-555000002"
+      },
+      "expected_valid": false,
+      "expected_reason": "Same customerName and country combination already exists",
+      "expected_status": 409
+    },
+
+    {
+      "data_id": "TD-CUST-010",
+      "description": "Existing customer retrieval data",
+      "customerId": 101,
+      "expected_exists": true,
+      "expected_operation": "Retrieve"
+    },
+
+    {
+      "data_id": "TD-CUST-011",
+      "description": "Nonexistent customer ID",
+      "customerId": 999999,
+      "expected_exists": false,
+      "expected_status": 404
+    },
+
+    {
+      "data_id": "TD-CUST-012",
+      "description": "Valid customer update data",
+      "customerId": 101,
+      "customerName": "ABC Corp Updated",
+      "country": "India",
+      "email": "updated@abccorp.example",
+      "phone": "+91-9876500010",
+      "expected_valid": true,
+      "expected_operation": "Update"
+    },
+
+    {
+      "data_id": "TD-CUST-013",
+      "description": "Attempt to change customer ID",
+      "customerId": 101,
+      "request_customerId": 202,
+      "customerName": "ABC Corp",
+      "country": "India",
+      "expected_valid": false,
+      "expected_reason": "Customer ID is immutable"
+    },
+
+    {
+      "data_id": "TD-CUST-014",
+      "description": "Invalid country during update",
+      "customerId": 101,
+      "customerName": "ABC Corp",
+      "country": "Zingababuva",
+      "expected_valid": false,
+      "expected_reason": "Unsupported country"
+    },
+
+    {
+      "data_id": "TD-CUST-015",
+      "description": "Invalid input for data integrity testing",
+      "customerId": 101,
+      "invalid_requests": [
+        {
+          "customerName": "",
+          "country": "India"
+        },
+        {
+          "customerName": "ABC Corp",
+          "country": "Zingababuva"
+        },
+        {
+          "customerName": "ABC Corp",
+          "country": "India",
+          "email": "invalid-email"
+        }
+      ],
+      "expected_effect": "Existing customer must remain unchanged"
+    },
+
+    {
+      "data_id": "TD-CUST-016",
+      "description": "Invalid optional field combinations",
+      "variations": [
+        {
+          "customerName": "Invalid Email",
+          "country": "India",
+          "email": "not-an-email",
+          "expected_valid": false
+        },
+        {
+          "customerName": "Invalid Phone",
+          "country": "India",
+          "phone": "not-a-phone",
+          "expected_valid": false
+        },
+        {
+          "customerName": "Invalid Both",
+          "country": "India",
+          "email": "invalid",
+          "phone": "invalid",
+          "expected_valid": false
+        }
+      ]
+    },
+
+    {
+      "data_id": "TD-CUST-017",
+      "description": "Evidence and traceability reference data",
+      "requirement_id": "REQ-CUST-008",
+      "testcase_id": "TC-CUST-008",
+      "environment": "LOCAL",
+      "purpose": "Support evidence collection and end-to-end traceability"
+    }
+  ],
+
+  "authorization_data": [
+
+    {
+      "data_id": "TD-AUTH-001",
+      "role": "Manager",
+      "permissions": [
+        "CREATE",
+        "RETRIEVE",
+        "UPDATE"
+      ],
+      "expected_authorized": true
+    },
+
+    {
+      "data_id": "TD-AUTH-002",
+      "role": "Developer",
+      "permissions": [
+        "CREATE",
+        "RETRIEVE"
+      ],
+      "restricted_operations": [
+        "UPDATE"
+      ],
+      "expected_update_authorized": false
+    },
+
+    {
+      "data_id": "TD-AUTH-003",
+      "role": "Business Head",
+      "permissions": [
+        "CREATE",
+        "RETRIEVE",
+        "UPDATE"
+      ],
+      "expected_authorized": true
+    },
+
+    {
+      "data_id": "TD-AUTH-004",
+      "role": "Business Lead",
+      "permissions": [
+        "CREATE",
+        "RETRIEVE",
+        "UPDATE"
+      ],
+      "expected_authorized": true
+    },
+
+    {
+      "data_id": "TD-AUTH-005",
+      "role": "QA",
+      "permissions": [
+        "CREATE",
+        "RETRIEVE"
+      ],
+      "restricted_operations": [
+        "UPDATE"
+      ],
+      "expected_update_authorized": false
+    },
+
+    {
+      "data_id": "TD-AUTH-006",
+      "role": "Unauthenticated",
+      "credentials": null,
+      "expected_authorized": false,
+      "expected_status": 401
+    },
+
+    {
+      "data_id": "TD-AUTH-007",
+      "role": "AuthenticatedUnauthorizedUser",
+      "credentials": "VALID_BUT_INSUFFICIENT_PERMISSION",
+      "expected_authorized": false,
+      "expected_status": 403
+    }
+  ],
+
+  "performance_data": [
+
+    {
+      "data_id": "TD-PERF-001",
+      "description": "Standard performance validation",
+      "operations": [
+        "POST /customers",
+        "GET /customers/{customerId}",
+        "PUT /customers/{customerId}"
+      ],
+      "response_time_threshold_seconds": 8,
+      "comparison": "less_than",
+      "environment": "LOCAL"
+    }
+  ],
+
+  "security_data": [
+
+    {
+      "data_id": "TD-SEC-001",
+      "description": "Approved security testing dataset",
+      "test_categories": [
+        "Authentication",
+        "Authorization",
+        "Input validation",
+        "Authorization bypass attempts",
+        "Sensitive information exposure"
+      ],
+      "environment": "AUTHORIZED_TEST_ENVIRONMENT"
+    },
+
+    {
+      "data_id": "TD-SEC-002",
+      "description": "Security finding preservation data",
+      "finding_type": "Unauthorized access attempt",
+      "expected_action": [
+        "Preserve evidence",
+        "Record finding",
+        "Escalate according to governance"
+      ]
+    }
+  ],
+
+  "change_management_data": [
+
+    {
+      "data_id": "TD-CHANGE-001",
+      "description": "Controlled requirement change",
+      "change_type": "Requirement modification",
+      "original_rule": "Country is optional",
+      "new_rule": "Country is mandatory",
+      "expected_agent_behavior": [
+        "Detect requirement delta",
+        "Identify impacted testcases",
+        "Identify impacted test data",
+        "Identify impacted automation",
+        "Preserve previous history",
+        "Generate re-planning recommendation",
+        "Request human approval where governance requires"
+      ]
+    },
+
+    {
+      "data_id": "TD-CHANGE-002",
+      "description": "Historical version preservation",
+      "versions": [
+        "SRS-CUSTOMER-001 v1.0",
+        "SRS-CUSTOMER-001 v2.0"
+      ],
+      "expected_behavior": [
+        "Both versions remain available",
+        "Previous execution history remains available",
+        "No historical artifact is deleted"
+      ]
+    }
+  ],
+
+  "conflict_data": [
+
+    {
+      "data_id": "TD-CONFLICT-001",
+      "description": "Controlled conflict between approved sources",
+      "source_a": {
+        "document": "SRS-CUSTOMER-001",
+        "version": "1.0",
+        "statement": "Country is mandatory"
+      },
+      "source_b": {
+        "document": "customer_api.yaml",
+        "version": "1.0.0",
+        "statement": "Country is optional"
+      },
+      "expected_agent_behavior": [
+        "Retrieve both sources",
+        "Detect conflict",
+        "Preserve evidence",
+        "Do not guess",
+        "Do not silently modify testcase baseline",
+        "Trigger human governance"
+      ]
+    }
+  ],
+
+  "governance_data": [
+
+    {
+      "data_id": "TD-GOV-001",
+      "description": "Unauthorized testcase baseline change",
+      "requested_action": "Modify approved testcase",
+      "expected_action": "Human approval required"
+    },
+
+    {
+      "data_id": "TD-GOV-002",
+      "description": "Artifact deletion request",
+      "requested_action": "Delete existing artifact",
+      "expected_action": "Deletion must be refused"
+    }
+  ],
+
+  "environment_data": [
+
+    {
+      "data_id": "TD-ENV-001",
+      "description": "Controlled environment blockage",
+      "blocked_dependency": "Customer API environment",
+      "blocked_test_scope": [
+        "API execution tests dependent on unavailable environment"
+      ],
+      "independent_scope": [
+        "Testcase validation",
+        "Test data validation",
+        "RAG retrieval",
+        "Requirement analysis",
+        "Governance validation"
+      ],
+      "expected_agent_behavior": [
+        "Mark dependent execution as blocked",
+        "Do not mark blocked tests as passed",
+        "Do not unnecessarily stop independent work",
+        "Continue independent activities",
+        "Report blockage and impact"
+      ]
+    }
+  ],
+
+  "failure_analysis_data": [
+
+    {
+      "data_id": "TD-FAIL-001",
+      "description": "Controlled failure for RCA",
+      "scenario": "API returns HTTP 201 but customer cannot subsequently be retrieved",
+      "observed_result": "Create returned 201 but GET returned 404",
+      "expected_result": "Created customer must be retrievable",
+      "expected_agent_behavior": [
+        "Do not classify as pass based on HTTP 201",
+        "Collect create and GET evidence",
+        "Identify persistence failure",
+        "Perform RCA",
+        "Preserve evidence",
+        "Report valid failure"
+      ]
+    }
+  ]
+}

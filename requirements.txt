@@ -1,0 +1,8 @@
+# Intended dependencies for Agentic QE (not yet installed).
+#
+# requests      - HTTP client for API automation tool
+# pytest        - test execution framework
+# PyYAML        - parsing OpenAPI/YAML specs and YAML configuration
+# playwright    - browser automation, where useful
+#
+# Do not install packages as part of this task.

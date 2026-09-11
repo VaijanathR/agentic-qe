@@ -1,0 +1,361 @@
+openapi: 3.0.3
+
+info:
+  title: Customer Management API
+  version: 1.0.0
+  description: |
+    OpenAPI definition for the Customer Management API.
+    This specification is derived from the approved Customer Management
+    SRS v1.0 and Technical Specification v1.0.
+
+servers:
+  - url: http://localhost:8000
+
+tags:
+  - name: Customers
+    description: Customer creation, retrieval and update operations
+
+paths:
+
+  /customers:
+
+    post:
+      tags:
+        - Customers
+      summary: Create a customer
+      operationId: createCustomer
+
+      security:
+        - bearerAuth: []
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerCreateRequest'
+
+      responses:
+
+        '201':
+          description: Customer created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+
+        '400':
+          description: Invalid customer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '403':
+          description: Authenticated user is not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '409':
+          description: Duplicate customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+  /customers/{customerId}:
+
+    get:
+      tags:
+        - Customers
+      summary: Retrieve a customer
+      operationId: getCustomer
+
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: Unique system-generated customer identifier
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+
+      responses:
+
+        '200':
+          description: Customer retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '403':
+          description: Authenticated user is not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+    put:
+      tags:
+        - Customers
+      summary: Update a customer
+      operationId: updateCustomer
+
+      security:
+        - bearerAuth: []
+
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: Unique system-generated customer identifier
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerUpdateRequest'
+
+      responses:
+
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerResponse'
+
+        '400':
+          description: Invalid customer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '401':
+          description: Authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '403':
+          description: Authenticated user is not authorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '404':
+          description: Customer not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '409':
+          description: Update would create a duplicate customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+        '500':
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+
+components:
+
+  securitySchemes:
+
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+
+  schemas:
+
+    CustomerCreateRequest:
+
+      type: object
+      required:
+        - customerName
+        - country
+
+      properties:
+
+        customerName:
+          type: string
+          minLength: 1
+          description: Customer name. Must not be empty.
+          example: ABC Corp
+
+        country:
+          type: string
+          description: Supported country name. Validation is case-insensitive.
+          enum:
+            - India
+            - Germany
+            - UK
+            - USA
+          example: India
+
+        email:
+          type: string
+          format: email
+          description: Optional customer email address.
+          example: contact@abccorp.com
+
+        phone:
+          type: string
+          description: Optional customer phone number.
+          example: "+91-9876543210"
+
+
+    CustomerUpdateRequest:
+
+      type: object
+      required:
+        - customerName
+        - country
+
+      properties:
+
+        customerName:
+          type: string
+          minLength: 1
+          description: Customer name. Must not be empty.
+          example: ABC Corp Updated
+
+        country:
+          type: string
+          description: Supported country name. Validation is case-insensitive.
+          enum:
+            - India
+            - Germany
+            - UK
+            - USA
+          example: India
+
+        email:
+          type: string
+          format: email
+          description: Optional customer email address.
+          example: updated@abccorp.com
+
+        phone:
+          type: string
+          description: Optional customer phone number.
+          example: "+91-9876543211"
+
+
+    CustomerResponse:
+
+      type: object
+      required:
+        - customerId
+        - customerName
+        - country
+
+      properties:
+
+        customerId:
+          type: integer
+          format: int64
+          description: System-generated unique customer identifier.
+          example: 101
+
+        customerName:
+          type: string
+          example: ABC Corp
+
+        country:
+          type: string
+          example: India
+
+        email:
+          type: string
+          format: email
+          nullable: true
+          example: contact@abccorp.com
+
+        phone:
+          type: string
+          nullable: true
+          example: "+91-9876543210"
+
+
+    ErrorResponse:
+
+      type: object
+      required:
+        - errorCode
+        - message
+
+      properties:
+
+        errorCode:
+          type: string
+          example: CUSTOMER_DUPLICATE
+
+        message:
+          type: string
+          example: Customer already exists.
+
+        details:
+          type: object
+          additionalProperties: true
